@@ -22,7 +22,7 @@
 - What does "most similar" mean?
     - Distance metric to compare images: **L1 distance**
         - Sum of pixel-wise absolute value difference
-- **<span style="color:red">Problems:</span>** we want classifiers that are **fast** at prediction and **slow** at training
+- <span style="color:red">Problems:</span> we want classifiers that are **fast** at prediction and **slow** at training
 
 ### Classifier #2: K-Nearest Neighbors
 - Instead of copying label from nearest neighbor, take **majority vote** from K closest points
