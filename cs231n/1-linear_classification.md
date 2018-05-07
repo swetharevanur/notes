@@ -12,10 +12,16 @@
 - Background clutter
 - Intraclass variation
 
+**The Machine Learning Paradigm:**
 ```
-**The machine learning paradigm:**
 data --> TRAIN --> model
 model --> PREDICT --> labels
 ```
 
 ### Classifier #1: Nearest Neighbor
+- Train: memorize all data and labels; O(1)
+- Test: predict the label of the most similar training image, O(N)
+- What does "most similar" mean?
+    - Distance metric to compare images: **L1 distance**
+        - Sum of pixel-wise absolute value difference
+- $\sum_i^j$
