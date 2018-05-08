@@ -1,4 +1,4 @@
-# Introduction to Neural Networks ([Lecture 2](http://cs231n.stanford.edu/slides/2018/cs231n_2018_lecture02.pdf))
+# Backpropagation and Neural Networks ([Lecture 4](http://cs231n.stanford.edu/slides/2018/cs231n_2018_lecture04.pdf))
 
 ## Task
 - Assigns labels to pictures
