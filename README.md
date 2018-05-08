@@ -1,1 +1,1 @@
-# notes
+*Notes from my various courses.*
