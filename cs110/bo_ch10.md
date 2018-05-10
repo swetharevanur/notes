@@ -1,4 +1,4 @@
-# Bryant & O'Hallaron, Ch. 10: System-Level I/O
+# [Bryant & O'Hallaron, Ch. 10](http://www.codeman.net/wp-content/uploads/2011/12/Computer_Systems-A_Programmers_Perspective-2e.pdf#page=896): System-Level I/O
 
 ## Ch. 10.1: Unix I/O
 - I/O = copying data from RAM (input) and to external devices like hard drives, etc. (output).
