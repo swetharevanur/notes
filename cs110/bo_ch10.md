@@ -75,9 +75,9 @@
 
 ## Ch. 10.6: Sharing Files
 - Kernel opens files using three data structures:
-1. File descriptor table
-- **Each process has its own FD table.**
-- Each open descriptor points to an entry in the file entry table.
+	1. File descriptor table
+		- **Each process has its own FD table.**
+		- Each open descriptor points to an entry in the file entry table.
 2. File entry table
 - Represents the set of open files **shared by all processes**.
 - Each entry has:

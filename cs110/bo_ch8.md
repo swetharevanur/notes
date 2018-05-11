@@ -78,7 +78,7 @@
 - When the parent reaps the terminated child, the kernel passes the child's exit status to the parent and then discards the terminated process.
 - We have to **keep the parent around so it can reap its children!** We do this by calling `waitpid()`.
 
-#### `pid_t waitpid(pid_t pid, int *status, int options)`
+### `pid_t waitpid(pid_t pid, int *status, int options)`
 - Returns pid of child if okay, 0 (if WNOHANG) or -1 on error.
 - Determining a wait set (processes the parent needs to wait for):
 	- If `pid > 0`, then wait for single process identified by `pid`.
@@ -98,27 +98,94 @@
 	- If `waitpid` returns -1 and `errno` is ECHILD, calling process has no children.
 	- If `waitpid` returns -1 and `errno` is EINTR, calling process was interrupted by signal.
 
-#### `unsigned int sleep(unsigned int secs)`
+### `unsigned int sleep(unsigned int secs)`
 - Suspends a process for a specified period of time.
 - Returns seconds left to sleep (0 if time elapsed).
 - `int pause(void)` puts the calling function to sleep until a signal is received.
 
-#### `int execvp(const char *file, char *const argv[])`
+### `int execvp(const char *file, char *const argv[])`
 - Loads and runs a **new program in the context of the current process**. Does NOT create a new progress.
 - Returns to the calling program only if there is an error (called once and never returns).
 - `argv[0]` is the name of the executable object file, and the last element in `argv[]` is NULL. If `*argv[argc - 1]` is &, then the program should run in the background.
 - After `execvp()` is called, the `file` is loaded and the startup code sets up the stack, passing control to the main function of the new program.
 
-#### Using `fork` and `execvp` to Run Programs
+### Using `fork` and `execvp` to Run Programs
 - A **shell** is an interactive application-level program that runs other programs on behalf of the user. The original shell was the `sh` program, followed by variants like `bash`.
 - The shell performs a sequence of read/evaluate steps before terminating.
 - **Background** program: the shell does not wait for it to complete.
 - **Foreground** program: the shell does wait for it to complete.
 
 ## Ch. 8.5: Signals
+- Signals allow processes and the kernel to interrupt other processes.
+- A **signal** is a small message that notifies a process that an event of some type has occurred in the system. Type `man 7 signal` to see all signals.
+- CTRL-C sends SIGINT to interrupt a foreground process.
+- CTRL-Z sends a SIGTSTP signal to suspend the foreground process.
+- SIGKILL forcibly terminates a process.
+- SIGCHLD is sent to the parent when a child process terminates or stops.
+- A signal that has been sent but not yet received is called a pending signal. At one pint in time, there is at most one pending signal of a particular type. All subsequent signals of the same type are not queued. The set of pending signal is maintained in the `pending` bit vector.
+- When a signal is **blocked**, the pending signal cannot be handled until it's unblocked. The set of blocked signals is maintained in the `blocked` bit vector.
 
-## Ch. 8.6: Nonlocal Jumps
+### Process Groups
+- Every process belongs to exactly one process group, which is identified by a proucess group ID. `pid_t getpgrp(void)` returns the pgid of the current process.
+- By default, a child process belongs to the same process group as its parent. You can change the process group by using `int setpgid(pid_t pid, pid_t pgid)`.
+	- Returns 0 on success, -1 on error.
+	- If `pid` is 0, the pid of the current process if used.
+	- If `pgid` is 0, the pid the process specified by `pid` is used as the pgid.
+- `int kill(pid_t, pid, int sig)` can be used to send a signal to any process group or process. If `pid` is -1, then the signal is sent to all processes in the group.
+- A **job** represents the processes that are created as a result of evaluating a single command line statement.
+
+### Signal Handling
+- Use the `sighandler_t signal(int signum, sighandler_t handler)` function to install a signal handler function that is called asynchronously, interrupting the infinite `while` loop in `main`, whenever the process receives a signal.
+- Each signal type has a predefined default action:
+1. The process terminates.
+2. The process terminates and dumps core.
+3. The process stops until restarted by a SIGCONT signal.
+4. The process ignores the signal.
+- These default actions can be overwritten with `signum`, which can be:
+1. SIG_IGN: signals of type `signum` are ignored.
+2. SIG_DFL: action for signals of type `signum` reverts to the default.
+3. The address of a user defined function.
+
+### Signal Handling Issues
+- Pending signals are blocked.
+- Pending signals are not queued. The key idea is that the existence of a pending signal merely indicates that at least one signal has arrived.
+	- **Signals can't be used to count the occurrence of events in other processes.**
+	- For instance, the SIGCHLD handler must be able to reap as many zombie children as possible each time it's invoked.
+- System calls can be interrupted. Slow system calls (like `read`, etc.) need to be manually restarted so that the signal handling is portable across different systems.
+- Best idea? Create a `Signal` wrapper that does the following:
+	- Only signals of the type currently being processed by the handler are blocked.
+	- As with all signal implementations, signals are not queued.
+	- Interrupted system calls are automatically restarted whenever possible.
+
+### Explicitly Blocking and Unblocking Signals
+
+#### `int sigprocmask(int how, const sigset_t *set, sigset_t *oldset)`
+- Changes the set of currently blocked signals.
+- Values for `how`:
+1. SIG_BLOCK: add signals in `set` to `blocked`
+2. SIG_UNBLOCK: remove signals in `set` from `blocked`
+3. SIG_SETMASK: `blocked = set`
+- If `oldset` is non-NULL, the previous value of `blocked` is stored in it.
+- That's where this chunk of code that appears in 110 programming assignments comes in:
+    sigset_t additions, existing;
+    sigemptyset(&additions);
+    sigaddset(&additions, SIGCHLD);
+    sigprocmask(SIG_BLOCK, &additions, &existing);
+    // ... do some stuff... maybe a sigsuspend()
+    sigprocmask(SIG_UNBLOCK, &additions, NULL);
+
+### Avoiding Concurrency Bugs and Race Conditions
+- Goal: synchronize concurrent flow to allow the largest set of feasible interleavings such that each interleaving produces a correct answer.
+
+#### Race conditions:
+- Consider a scenario where a parent creates a new child process, it adds the child to the job list. When the parent reaps a terminated (zombie) child in the SIGCHLD signal handler, it deletes the child from the job list.
+- It is possible for `deletejob` to be called before `addjob`, if the child process completes before the parents and becomes a zombie. This is incorrect, and there is a race between the call to `addjob` and the call to `deletejob`.
+- Solution? Block SIGCHLD signals before the call to `fork` and the ublock them only after we have called `addjob`. This way, the child will only be reaped after it's been added to the job list. 
+- Also, children inherit the `blocked` set of their parents, so we must be careful to unblock the SIGCHLD signal in the child before calling `execvp`.
+- You can expose races in your code by randomly deciding to sleep in the parent or the child. You then have a higher likelihood of exercise both orderings of child and parent executions, regardless of the particular kernel’s scheduling policy.
 
 ## Ch. 8.7: Tools for Manipulating Processes
-
-## Ch. 8.8 Summary
+- `strace`: prints trace of each system call invoked by a running program and its children.
+- `ps`: lists processes and zombies currently in the system.
+- `top`: prints info abuot the resource usage of current processes.
+- `pmap`: displays the memory map of a process
