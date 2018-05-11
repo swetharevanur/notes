@@ -58,6 +58,7 @@ An entry in another table, called the **file entry table** (also maintained syst
 Finally, an entry in the **file descriptor table** (maintained per-process in memory) is allocated and points to the file entry in the file entry table.
 
 - File descriptors 0, 1, and 2 are `stdin`, `stdout`, and `stderr` streams.
+- Maintained by the kernel and resides in the kernel space, not the process's memory space.
 
 > Aside:
 > A symbolic link (aka symlink or soft link) is the nickname for a file. It contains a reference to another file or directory in the form or an absolute or relative path. Symlinks operate as if they are working directly on the target file. But the existence of symlinks changes an otherwise hierarchical file system into a directed graph.
