@@ -18,6 +18,8 @@
 
 ![](https://image.ibb.co/j8cyJy/Screen_Shot_2018_05_14_at_1_20_24_AM.png)
 
+- [Intuition behind voltage](https://www.quora.com/Intuition-of-voltage-in-electric-field): voltage is the "height" in the electric field instead of the gravitational one. $U = Vq$ is analogous to gravitational potential energy. Your voltage times charge says how much energy you'd gain "falling" in the electric field a certain distance, and it's scaled by your charge. It takes into account "height" but for the electric force. The "higher" you go, in gravitational or electric fields, the more potential energy you have.
+
 ## Ch. 25.1: Electric Potential Energy
 
 ### Mechanics Review
