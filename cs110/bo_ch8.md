@@ -167,12 +167,19 @@
 3. SIG_SETMASK: `blocked = set`
 - If `oldset` is non-NULL, the previous value of `blocked` is stored in it.
 - That's where this chunk of code that appears in 110 programming assignments comes in:
+``` 
     sigset_t additions, existing;
+    
     sigemptyset(&additions);
+    
     sigaddset(&additions, SIGCHLD);
+    
     sigprocmask(SIG_BLOCK, &additions, &existing);
+    
     // ... do some stuff... maybe a sigsuspend()
+    
     sigprocmask(SIG_UNBLOCK, &additions, NULL);
+```
 
 ### Avoiding Concurrency Bugs and Race Conditions
 - Goal: synchronize concurrent flow to allow the largest set of feasible interleavings such that each interleaving produces a correct answer.

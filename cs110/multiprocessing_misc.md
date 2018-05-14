@@ -1,7 +1,7 @@
 # Miscellaneous Multiprocessing Notes (written referencing [this](https://github.com/Leedehai/CS110Notes/blob/master/CS110NotesCollection/Topic%202%20Multiprocessing%20(2).md) and [this](https://github.com/Leedehai/CS110Notes/blob/master/CS110NotesCollection/Topic%202%20Multiprocessing%20(3).md))
 
 ## Main Calls
-- `fork()` replicates the parent to a new child process, and returns to child's PID to the parent
+- `fork()` replicates the parent to a new child process, and returns to child's PID to the parent. The child gets its own copy of global variables too!
 - `waitpid()` blocks the parent and waits on the child specified by its PID
 - `execvp()` replaces the entire memory space of the parent with the child's context, but does not change the process's PID and parent-child relationship
 
