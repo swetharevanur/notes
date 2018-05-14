@@ -34,6 +34,8 @@
 
 - The positive charge $q$ inside the capacitor speeds up and gains kinetic energy and **loses electric potential energy** as it "falls" towards the negative plate.
 - The electric potential energy of $q$ in a uniform electric field is $U_{elec} = U_0 + qEs$, where $s$ is the distance from the negative plate and $U_0$ is the potential energy there. True regardless of $q$'s sign!
+- **Problem Type:** Charged particle acceleration in a parallel plate capacitor (or other uniform electric field)
+	- **Strategy:** Use conservation of energy and solve for $v_f$.
 
 ## Ch. 25.2: The Potential Energy of Point Charges
 
@@ -42,6 +44,8 @@
 
 ### Escape Speeds
 - Two oppositely charged particles can escape from each other if $E_{mech} > 0$. The threshold condition is $E_{mech} = 0$, which allows the particles to reach infinite separation at infinitely slow speed. 
+- **Problem Type:** Escape speed of two interacting particles
+	- **Strategy:** Use conservation of energy. When particles end up far apart, $U_f \approx 0$.
 
 ### Electric Force is Conservative
 - Again, this means work done is independent of path.
