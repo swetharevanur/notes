@@ -1,6 +1,17 @@
 # Knight Physics, Ch. 27: Current and Resistance (written referencing [this](http://faculty.uml.edu/arthur_mittler/Teaching/95_144/Ch%2027%20Knight%204th.pdf))
 
 ## Key Formulas and Ideas
+- Current represents the flow of positive charge.
+- Conservation of charge from Kirchhoff's junction law.
+ 
+![](https://image.ibb.co/eLGY3y/Screen_Shot_2018_05_14_at_2_54_03_PM.png)
+
+- The electric field causes a drift of the sea of free-moving conducting electrons (opposite direction of current). More electron collisions means higher resistivity and lower conductivity.
+- The drift speed is $v_d = \frac{e\tau}{m}E$, where $\tau$ is the mean time between collisions.
+- The electron current is related to the drift speed by $i_e = n_eAv_d$ where $n_e$ is the electron density.
+- Conductivity is $\sigma = \frac{n_ee^2\tau}{m}$ and resisitivity is $\rho = 1/\sigma$.
+- The potential difference $\Delta V_{wire}$ between the ends of a wire creates an electric field inside the wire: $$E_{wire} = \frac{\Delta V_{wire}}{L}$$
+- The electric field causes a current in the direction of decreasing potential. From Ohm's law size of the current is $$I = \frac{\Delta V_{wire}}{R}$$ where $R = \frac{\rho L}{A}$ is the wire's resistance.
 
 ## Ch. 27.1: The Electron Current
 - To discharge a capacitor (that would otherwise stay charged indefinitely), connect the plates to a wire. As the capacitor discharges, there is current in the wire.
@@ -46,5 +57,23 @@
 - If there is a junction, $\sum I_{in} = \sum I_{out}$.
 
 ## Ch. 27.4: Conductivity and Resistivity
+- Conductivity is another property of a material. The formula is: $$\sigma = \frac{n_ee^2\tau}{m}$$
+- $J = \sigma E = I/A$
+- **Resistivity** (another material property) tell us how reluctantly the electrons move in response to an electric field: $$\rho = \frac{1}{\sigma} = \frac{m}{n_ee^2\tau}$$
+
+### Superconductivity
+- Sudden and complete loss of all resistance to current at low temperatures is known as **superconductivity**.
+- Superconductors have unusual magnetic properties.
 
 ## Ch. 27.5: Resistance and Ohm's Law
+- Current is related to voltage by $I = \frac{A}{\rho L}\Delta V$.
+- The current through a conductor is inversely proportional to the potential different between its end.
+- **Resistance** $R$ of a long, thin conductor of length $L$ and cross-sectional area $A$ is $$R = \frac{\rho L}{A}$$
+- Measured in ohms; $1 \Omega = 1 V/A$.
+- **Ohm's Law** states that the current through a conductor is determind by the potential difference $\Delta V$ along its length: $$I = \frac{\Delta V}{R}$$.
+- Ohm's law only applies to *ohmic* materials whose $R$ is constant.
+- Metals and other conductors are ohmic devices.
+- When the current through the device is not directly proportional to the potential difference, those materials are nonohmic (e.g. diodes, batteries, and capacitors).
+- In a **battery-wire-resistor-wire circuit, the current $I$ through the resistor is the same as the current in each wire.**
+
+![](https://image.ibb.co/fgcvGJ/Screen_Shot_2018_05_14_at_2_47_57_PM.png)
