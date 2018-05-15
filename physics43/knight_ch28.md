@@ -77,4 +77,4 @@ where $\Delta V_R$ is the potential difference measured by the voltmeter.
 - The resistor current is the rate at which charge is removed from the capacitor: $$I = -\frac{dQ}{dt}$$
 - If you integrate over time, $Q = Q_0 e^{-t/\tau}$ where $\tau = RC$. Same decay equation for $I$ and $\Delta V$.
 - Over time, charge and current both decay exponentially in RC circuits.
-- With an RC circuit, you can both charge and discharge a capacitor. We can model the capacitor charging with "upside-down decay": $Q = Q_0(1 - e^{-t/\tau})$.
+- With an RC circuit, you can both charge and discharge a capacitor. You can model the capacitor charging with "upside-down decay": $Q = Q_0(1 - e^{-t/\tau})$.
