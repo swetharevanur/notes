@@ -35,7 +35,7 @@
 ## Ch. 28.4: Series Resistors
 - Lightbulbs are considered resistors. When multiple bulbs are placed in series, less current flows through than if there was just one bulb. So the one bulb circuit will be brighter than either of the bulbs in a two bulb circuit.
 - This is called **series resistors**. $\Delta V_{total} = IR_1 + IR_2 = I(R_1 + R_2)$.
-- The current $I$ through all resistors is the same. **Equivalent esistance is additive for multiple resistors in series!** You can replace two series resistors with an equivalent resistor with no consequence.
+- The current $I$ through all resistors is the same. **Equivalent resistance is additive for multiple resistors in series!** You can replace two series resistors with an equivalent resistor with no consequence.
 
 ### Ammeters
 - Device that measures the current in a circuit element. Must be placed in series with whatever it's trying to measure.
